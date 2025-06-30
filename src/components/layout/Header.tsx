@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Phone, Menu, MapPin, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet'
@@ -9,77 +10,101 @@ import { Separator } from '@/components/ui/separator'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const phoneNumbers = {
-    paris: '+33 1 23 45 67 89',
-    geneva: '+41 22 123 45 67',
-    brussels: '+32 2 123 45 67'
+    paris: '+33 1 85 09 53 99',
+    geneva: '+41 22 51 97 227',
+    brussels: '+32 2 31 86 38 8'
+  }
+
+  // Determine current city based on pathname
+  const getCurrentCity = () => {
+    console.log('Current pathname:', pathname) // Debug log
+    
+    if (pathname?.includes('/geneve')) {
+      return {
+        name: 'Genève',
+        flag: '🇨🇭',
+        phone: phoneNumbers.geneva,
+        key: 'geneva'
+      }
+    } else if (pathname?.includes('/bruxelles')) {
+      return {
+        name: 'Bruxelles',
+        flag: '🇧🇪',
+        phone: phoneNumbers.brussels,
+        key: 'brussels'
+      }
+    } else {
+      return {
+        name: 'Paris',
+        flag: '🇫🇷',
+        phone: phoneNumbers.paris,
+        key: 'paris'
+      }
+    }
+  }
+
+  const currentCity = getCurrentCity()
+  console.log('Current city:', currentCity) // Debug log
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center mr-2 sm:mr-3">
+                  <span className="text-primary-foreground font-bold text-lg sm:text-xl">🚗</span>
+                </div>
+                <div>
+                  <h1 className="text-lg sm:text-xl font-bold text-foreground">drive-me24</h1>
+                  <p className="text-xs text-muted-foreground hidden sm:block">Paris • Genève • Bruxelles</p>
+                </div>
+              </Link>
+            </div>
+            <div className="hidden md:block text-center">
+                          <p className="text-sm font-semibold text-secondary">
+              Besoin d&apos;un chauffeur ? <span className="text-primary">Appelez maintenant !</span>
+            </p>
+              <p className="text-xs text-muted-foreground">Réponse immédiate • Service 24h/24</p>
+            </div>
+            <div className="hidden md:flex items-center space-x-3">
+              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Phone className="h-4 w-4 mr-2" />
+                Chargement...
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+    )
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b">
-      {/* Mobile info bar */}
-      <div className="block md:hidden bg-blue-900 text-white">
-        <div className="px-4">
-          <div className="flex items-center justify-between py-2 text-xs">
-            <div className="flex items-center">
-              <Clock className="h-3 w-3 mr-1" />
-              <span>Service 24h/24</span>
-            </div>
-            <div className="flex items-center">
-              <Phone className="h-3 w-3 mr-1" />
-              <span className="text-yellow-400 font-semibold">Appelez maintenant</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop info bar */}
-      <div className="hidden md:block bg-blue-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2 text-sm">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center">
-                <MapPin className="h-4 w-4 mr-2" />
-                <span>Service 24h/7j - Paris • Genève • Bruxelles</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="h-4 w-4 mr-2" />
-                <span>Réponse immédiate - Réservation en 2 minutes</span>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-yellow-400 font-semibold">Appelez maintenant :</span>
-              <a href={`tel:${phoneNumbers.paris}`} className="flex items-center hover:text-yellow-400 transition-colors">
-                <Phone className="h-4 w-4 mr-1" />
-                <span className="font-semibold">Paris</span>
-              </a>
-              <a href={`tel:${phoneNumbers.geneva}`} className="flex items-center hover:text-yellow-400 transition-colors">
-                <Phone className="h-4 w-4 mr-1" />
-                <span className="font-semibold">Genève</span>
-              </a>
-              <a href={`tel:${phoneNumbers.brussels}`} className="flex items-center hover:text-yellow-400 transition-colors">
-                <Phone className="h-4 w-4 mr-1" />
-                <span className="font-semibold">Bruxelles</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
 
       {/* Navigation principale */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center" aria-label="Retour à l'accueil - drive-me24">
               <div className="flex items-center">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-400 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
-                  <span className="text-gray-900 font-bold text-lg sm:text-xl">🚗</span>
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center mr-2 sm:mr-3">
+                  <span className="text-primary-foreground font-bold text-lg sm:text-xl" role="img" aria-label="Icône voiture">🚗</span>
                 </div>
                 <div>
-                  <h1 className="text-lg sm:text-xl font-bold text-gray-900">Transport Premium</h1>
-                  <p className="text-xs text-gray-600 hidden sm:block">Paris • Genève • Bruxelles</p>
+                  <h1 className="text-lg sm:text-xl font-bold text-foreground">drive-me24</h1>
+                  <p className="text-xs text-muted-foreground hidden sm:block">Paris • Genève • Bruxelles</p>
                 </div>
               </div>
             </Link>
@@ -89,42 +114,30 @@ export default function Header() {
           <div className="flex items-center md:hidden">
             <Button 
               size="sm" 
-              className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold mr-3 px-3 py-2"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold mr-3 px-3 py-2"
               asChild
             >
-              <a href={`tel:${phoneNumbers.paris}`} className="flex items-center">
+              <a href={`tel:${currentCity.phone}`} className="flex items-center" aria-label={`Appeler ${currentCity.name} au ${currentCity.phone}`}>
                 <Phone className="h-4 w-4 mr-1" />
-                <span className="text-sm">Paris</span>
+                <span className="text-sm">{currentCity.name}</span>
               </a>
             </Button>
           </div>
 
           {/* CTA Message Desktop */}
           <div className="hidden md:block text-center">
-            <p className="text-sm font-semibold text-blue-900">
-              Besoin d'un chauffeur ? <span className="text-yellow-600">Appelez maintenant !</span>
+            <p className="text-sm font-semibold text-black">
+              Besoin d&apos;un chauffeur ? <span className="text-primary">Appelez maintenant !</span>
             </p>
-            <p className="text-xs text-gray-600">Réponse immédiate • Service 24h/24</p>
+            <p className="text-xs text-muted-foreground">Réponse immédiate • Service 24h/24</p>
           </div>
 
           {/* CTAs desktop */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="outline" size="sm" asChild>
-              <a href={`tel:${phoneNumbers.paris}`} className="flex items-center">
+            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground" asChild>
+              <a href={`tel:${currentCity.phone}`} className="flex items-center" aria-label={`Appeler ${currentCity.name} au ${currentCity.phone}`}>
                 <Phone className="h-4 w-4 mr-2" />
-                Paris
-              </a>
-            </Button>
-            <Button variant="outline" size="sm" asChild>
-              <a href={`tel:${phoneNumbers.geneva}`} className="flex items-center">
-                <Phone className="h-4 w-4 mr-2" />
-                Genève
-              </a>
-            </Button>
-            <Button size="sm" className="bg-yellow-500 hover:bg-yellow-600 text-blue-900" asChild>
-              <a href={`tel:${phoneNumbers.brussels}`} className="flex items-center">
-                <Phone className="h-4 w-4 mr-2" />
-                Bruxelles
+                {currentCity.flag} {currentCity.name}
               </a>
             </Button>
           </div>
@@ -133,28 +146,79 @@ export default function Header() {
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" aria-label="Ouvrir le menu de navigation">
                   <Menu className="h-5 w-5" />
                   <span className="sr-only">Ouvrir le menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[280px] sm:w-[350px]">
-                <div className="flex flex-col h-full">
+              <SheetContent side="right" className="w-[280px] sm:w-[350px] overflow-y-auto">
+                <div className="flex flex-col min-h-full">
                   <SheetHeader className="pb-4">
                     <SheetTitle className="flex items-center justify-start text-base">
-                      <div className="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center mr-2">
-                        <span className="text-gray-900 font-bold text-lg">🚗</span>
+                      <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-2">
+                        <span className="text-primary-foreground font-bold text-lg" role="img" aria-label="Icône voiture">🚗</span>
                       </div>
-                      <span className="font-bold">Transport Premium</span>
+                      <span className="font-bold">drive-me24</span>
                     </SheetTitle>
                   </SheetHeader>
 
+                  {/* Navigation links mobile */}
+                  <div className="space-y-3 mb-6">
+                    <div className="text-center">
+                      <h4 className="font-semibold text-black mb-3 text-sm">Nos destinations :</h4>
+                    </div>
+                    
+                    <Button 
+                      variant="outline"
+                      className="w-full py-3 h-auto bg-white hover:bg-gray-50 border text-black" 
+                      asChild
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Link href="/" className="flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="font-semibold text-sm text-black">🇫🇷 Paris</div>
+                          <div className="text-xs text-black">Page d&apos;accueil</div>
+                        </div>
+                      </Link>
+                    </Button>
+
+                    <Button 
+                      variant="outline"
+                      className="w-full py-3 h-auto bg-white hover:bg-gray-50 border text-black" 
+                      asChild
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Link href="/geneve" className="flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="font-semibold text-sm text-black">🇨🇭 Genève</div>
+                          <div className="text-xs text-black">Service Genève</div>
+                        </div>
+                      </Link>
+                    </Button>
+
+                    <Button 
+                      variant="outline"
+                      className="w-full py-3 h-auto bg-white hover:bg-gray-50 border text-black" 
+                      asChild
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Link href="/bruxelles" className="flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="font-semibold text-sm text-black">🇧🇪 Bruxelles</div>
+                          <div className="text-xs text-black">Service Bruxelles</div>
+                        </div>
+                      </Link>
+                    </Button>
+                  </div>
+
+                  <Separator className="my-4" />
+
                   {/* CTA Message Mobile */}
-                  <div className="text-center mb-6 p-4 bg-blue-50 rounded-lg">
-                    <h3 className="text-lg font-bold text-blue-900 mb-2">
+                  <div className="text-center mb-6 p-4 bg-white rounded-lg border">
+                    <h3 className="text-lg font-bold text-black mb-2">
                       Appelez Maintenant !
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-black">
                       Réponse immédiate • Service 24h/24
                     </p>
                   </div>
@@ -162,47 +226,77 @@ export default function Header() {
                   {/* Phone Numbers Mobile */}
                   <div className="space-y-3 mb-6">
                     <div className="text-center">
-                      <h4 className="font-semibold text-gray-900 mb-3 text-sm">Choisissez votre ville :</h4>
+                      <h4 className="font-semibold text-black mb-3 text-sm">Choisissez votre ville :</h4>
                     </div>
                     
                     <Button 
-                      className="w-full bg-blue-600 hover:bg-blue-700 py-3 h-auto" 
+                      className={`w-full py-3 h-auto ${
+                        currentCity.key === 'paris' 
+                          ? 'bg-primary hover:bg-primary/90 text-primary-foreground' 
+                          : 'bg-white hover:bg-gray-50 border text-black'
+                      }`}
                       asChild
                       onClick={() => setIsOpen(false)}
                     >
-                      <a href={`tel:${phoneNumbers.paris}`} className="flex items-center">
-                        <Phone className="h-4 w-4 mr-3 flex-shrink-0" />
+                      <a href={`tel:${phoneNumbers.paris}`} className="flex items-center" aria-label={`Appeler Paris au ${phoneNumbers.paris}`}>
+                        <Phone className={`h-4 w-4 mr-3 flex-shrink-0 ${
+                          currentCity.key === 'paris' ? 'text-primary-foreground' : 'text-primary'
+                        }`} />
                         <div className="flex-1 text-left">
-                          <div className="font-semibold text-sm">🇫🇷 Paris</div>
-                          <div className="text-xs opacity-90">{phoneNumbers.paris}</div>
+                          <div className={`font-semibold text-sm ${
+                            currentCity.key === 'paris' ? 'text-primary-foreground' : 'text-black'
+                          }`}>🇫🇷 Paris</div>
+                          <div className={`text-xs ${
+                            currentCity.key === 'paris' ? 'text-primary-foreground opacity-90' : 'text-black'
+                          }`}>{phoneNumbers.paris}</div>
                         </div>
                       </a>
                     </Button>
 
                     <Button 
-                      className="w-full bg-blue-600 hover:bg-blue-700 py-3 h-auto" 
+                      className={`w-full py-3 h-auto ${
+                        currentCity.key === 'geneva' 
+                          ? 'bg-primary hover:bg-primary/90 text-primary-foreground' 
+                          : 'bg-white hover:bg-gray-50 border text-black'
+                      }`}
                       asChild
                       onClick={() => setIsOpen(false)}
                     >
-                      <a href={`tel:${phoneNumbers.geneva}`} className="flex items-center">
-                        <Phone className="h-4 w-4 mr-3 flex-shrink-0" />
+                      <a href={`tel:${phoneNumbers.geneva}`} className="flex items-center" aria-label={`Appeler Genève au ${phoneNumbers.geneva}`}>
+                        <Phone className={`h-4 w-4 mr-3 flex-shrink-0 ${
+                          currentCity.key === 'geneva' ? 'text-primary-foreground' : 'text-primary'
+                        }`} />
                         <div className="flex-1 text-left">
-                          <div className="font-semibold text-sm">🇨🇭 Genève</div>
-                          <div className="text-xs opacity-90">{phoneNumbers.geneva}</div>
+                          <div className={`font-semibold text-sm ${
+                            currentCity.key === 'geneva' ? 'text-primary-foreground' : 'text-black'
+                          }`}>🇨🇭 Genève</div>
+                          <div className={`text-xs ${
+                            currentCity.key === 'geneva' ? 'text-primary-foreground opacity-90' : 'text-black'
+                          }`}>{phoneNumbers.geneva}</div>
                         </div>
                       </a>
                     </Button>
 
                     <Button 
-                      className="w-full bg-yellow-500 hover:bg-yellow-600 text-blue-900 py-3 h-auto" 
+                      className={`w-full py-3 h-auto ${
+                        currentCity.key === 'brussels' 
+                          ? 'bg-primary hover:bg-primary/90 text-primary-foreground' 
+                          : 'bg-white hover:bg-gray-50 border text-black'
+                      }`}
                       asChild
                       onClick={() => setIsOpen(false)}
                     >
-                      <a href={`tel:${phoneNumbers.brussels}`} className="flex items-center">
-                        <Phone className="h-4 w-4 mr-3 flex-shrink-0" />
+                      <a href={`tel:${phoneNumbers.brussels}`} className="flex items-center" aria-label={`Appeler Bruxelles au ${phoneNumbers.brussels}`}>
+                        <Phone className={`h-4 w-4 mr-3 flex-shrink-0 ${
+                          currentCity.key === 'brussels' ? 'text-primary-foreground' : 'text-primary'
+                        }`} />
                         <div className="flex-1 text-left">
-                          <div className="font-semibold text-sm">🇧🇪 Bruxelles</div>
-                          <div className="text-xs opacity-90">{phoneNumbers.brussels}</div>
+                          <div className={`font-semibold text-sm ${
+                            currentCity.key === 'brussels' ? 'text-primary-foreground' : 'text-black'
+                          }`}>🇧🇪 Bruxelles</div>
+                          <div className={`text-xs ${
+                            currentCity.key === 'brussels' ? 'text-primary-foreground opacity-90' : 'text-black'
+                          }`}>{phoneNumbers.brussels}</div>
                         </div>
                       </a>
                     </Button>
@@ -211,13 +305,13 @@ export default function Header() {
                   <Separator className="my-4" />
 
                   {/* Service info mobile */}
-                  <div className="text-center text-sm text-gray-600 mt-auto">
+                  <div className="text-center text-sm text-black mt-auto">
                     <div className="flex items-center justify-center mb-2">
-                      <Clock className="h-4 w-4 mr-2" />
+                      <Clock className="h-4 w-4 mr-2 text-primary" />
                       <span>Service 24h/7j</span>
                     </div>
                     <div className="flex items-center justify-center">
-                      <MapPin className="h-4 w-4 mr-2" />
+                      <MapPin className="h-4 w-4 mr-2 text-primary" />
                       <span>3 capitales européennes</span>
                     </div>
                   </div>

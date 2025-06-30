@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-export default function HomePage() {
-  const phoneNumber = '+33 1 85 09 53 99';
+export default function BruxellesPage() {
+  const phoneNumber = '+32 2 31 86 38 8';
 
   const whyCallUs = [
     {
@@ -25,31 +25,31 @@ export default function HomePage() {
     }
   ];
 
-  // Structured data for SEO - Paris specific
+  // Structured data for SEO - Brussels specific
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "drive-me24 Paris",
-    "description": "Service de transport premium avec chauffeur à Paris",
-    "url": "https://drive-me24.com",
+    "name": "drive-me24 Bruxelles",
+    "description": "Service de transport premium avec chauffeur à Bruxelles",
+    "url": "https://drive-me24.com/bruxelles",
     "email": "contact@drive-me24.com",
     "telephone": phoneNumber,
     "serviceType": "Transport et Chauffeur Privé",
     "areaServed": {
       "@type": "City",
-      "name": "Paris",
-      "addressCountry": "FR"
+      "name": "Bruxelles",
+      "addressCountry": "BE"
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Services de Transport à Paris",
+      "name": "Services de Transport à Bruxelles",
       "itemListElement": [
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "drive-me24 Paris",
-            "description": "Service de chauffeur premium disponible 24h/24 à Paris"
+            "name": "drive-me24 Bruxelles",
+            "description": "Service de chauffeur premium disponible 24h/24 à Bruxelles"
           }
         }
       ]
@@ -79,46 +79,46 @@ export default function HomePage() {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/paris.jpeg')"
+              backgroundImage: "url('/brussels.webp')"
             }}
           ></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center min-h-[90vh] flex flex-col justify-center py-20">
               <Badge className="mb-6 bg-primary text-primary-foreground mx-auto">
-                drive-me24 Paris • 24h/24
+                drive-me24 Bruxelles • 24h/24
               </Badge>
               
               <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-white">
                 Besoin d&apos;un
-                <span className="text-primary block">Chauffeur à Paris ?</span>
+                <span className="text-primary block">Chauffeur à Bruxelles ?</span>
               </h1>
               
               <p className="text-lg sm:text-xl md:text-3xl text-white mb-8 max-w-4xl mx-auto px-4">
                 <strong>Appelez maintenant</strong> pour votre transport premium
                 <br />
-                Service 24h/24 dans toute l&apos;Île-de-France
+                Service 24h/24 dans toute la région bruxelloise
               </p>
               
               {/* Primary Phone CTA */}
               <div className="mb-12 px-4">
-                <div className="bg-background/10 backdrop-blur-sm rounded-2xl p-4 sm:p-8 max-w-2xl mx-auto border border-primary">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-8 max-w-2xl mx-auto border border-primary">
                   <p className="text-lg sm:text-xl mb-6 text-white text-center">
                     <strong>Réservation immédiate par téléphone</strong>
                   </p>
                   <div className="text-center">
-                    <div className="text-4xl sm:text-6xl mb-4">🇫🇷</div>
+                    <div className="text-4xl sm:text-6xl mb-4">🇧🇪</div>
                     <Button 
                       size="lg"
                       className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg sm:text-xl py-4 sm:py-6 px-8 sm:px-12 h-auto"
                       asChild
                     >
-                      <a href={`tel:${phoneNumber}`} className="flex items-center justify-center" aria-label={`Appeler Paris au ${phoneNumber}`}>
+                      <a href={`tel:${phoneNumber}`} className="flex items-center justify-center" aria-label={`Appeler Bruxelles au ${phoneNumber}`}>
                         <Phone className="mr-3 h-6 w-6 sm:h-8 sm:w-8" />
                         <span className="font-bold">{phoneNumber}</span>
                       </a>
                     </Button>
                     <p className="mt-4 text-sm sm:text-base text-white">
-                      Tous aéroports • Gares • Événements • Business
+                      Aéroport • Gares • Institutions • Business
                     </p>
                   </div>
                 </div>
@@ -147,11 +147,11 @@ export default function HomePage() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 px-4">
-              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-black mb-6">
                 Pourquoi Nous Appeler ?
               </h2>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Un service de chauffeur premium à Paris, conçu pour vous faire gagner du temps
+              <p className="text-lg sm:text-xl text-black max-w-3xl mx-auto">
+                Un service de chauffeur premium à Bruxelles, capitale européenne
               </p>
             </div>
             
@@ -159,15 +159,15 @@ export default function HomePage() {
               {whyCallUs.map((item, index) => (
                 <Card key={index} className="text-center border-0 shadow-lg hover:shadow-xl transition-shadow">
                   <CardHeader className="pb-4">
-                    <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                    <div className="mx-auto w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-4">
                       <item.icon className="h-8 w-8 text-primary" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-foreground">
+                    <CardTitle className="text-xl font-bold text-black">
                       {item.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{item.description}</p>
+                    <p className="text-black">{item.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -175,24 +175,24 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Service Areas in Paris */}
-        <section className="py-20 bg-background">
+        {/* Service Areas in Brussels */}
+        <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Zones de Service à Paris
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Zones de Service à Bruxelles
               </h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                Nous couvrons tous les arrondissements de Paris et l&apos;Île-de-France
+              <p className="text-lg text-black max-w-3xl mx-auto">
+                Nous couvrons toute la région de Bruxelles-Capitale et ses environs
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { title: 'Aéroports', items: ['CDG', 'Orly', 'Le Bourget'] },
-                { title: 'Gares', items: ['Gare du Nord', 'Gare de Lyon', 'Montparnasse'] },
-                { title: 'Business', items: ['La Défense', 'Châtelet', 'Opéra'] },
-                { title: 'Événements', items: ['Palais des Congrès', 'Bercy', 'Roland Garros'] }
+                { title: 'Aéroport', items: ['Brussels Airport', 'Charleroi', 'Ostend-Bruges'] },
+                { title: 'Gares', items: ['Gare du Midi', 'Gare Centrale', 'Gare du Nord'] },
+                { title: 'Institutions', items: ['Parlement Européen', 'Commission', 'Conseil'] },
+                { title: 'Business', items: ['Centre-ville', 'Uccle', 'Ixelles'] }
               ].map((area, index) => (
                 <Card key={index} className="text-center">
                   <CardHeader>
@@ -217,7 +217,7 @@ export default function HomePage() {
         <section className="py-20 bg-secondary text-secondary-foreground">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Prêt pour votre trajet à Paris ?
+              Prêt pour votre trajet à Bruxelles ?
             </h2>
             <p className="text-xl mb-8 text-muted">
               Appelez maintenant et soyez pris en charge dans les meilleurs délais
@@ -237,4 +237,4 @@ export default function HomePage() {
       </div>
     </>
   );
-}
+} 
