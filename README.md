@@ -7,7 +7,7 @@ Site web professionnel pour drive-me24, service de transport premium avec chauff
 ### Pages Actives
 - **Paris** - Page d'accueil principale (`/`) - **📞 +33 1 85 09 53 99**
 - **Genève** - Page dédiée (`/geneve`) - **📞 +41 22 51 97 227**
-- **Bruxelles** - Page dédiée (`/bruxelles`) - *En développement*
+- **Bruxelles** - Page dédiée (`/bruxelles`) - **📞 +32 2 31 86 38 8**
 
 Chaque ville a sa propre page optimisée avec :
 - Numéro de téléphone local
@@ -54,7 +54,7 @@ Chaque ville a sa propre page optimisée avec :
 
 ```bash
 # Cloner le projet
-git clone <votre-repo>
+git clone https://github.com/0xJosep/taxi-vtc.git
 cd taxi-vtc
 
 # Installer les dépendances
@@ -136,7 +136,7 @@ src/
 ### Configuration des Contacts
 **Paris**: `+33 1 85 09 53 99`
 **Genève**: `+41 22 51 97 227`
-**Bruxelles**: *À définir*
+**Bruxelles**: `+32 2 31 86 38 8`
 
 ### Métadonnées SEO
 Chaque ville a ses propres :
