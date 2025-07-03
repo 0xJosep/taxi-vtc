@@ -135,7 +135,7 @@ export default function HomePage() {
                   <div className="text-xs sm:text-sm text-white">Disponibilité</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-primary">2min</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-primary">2 min</div>
                   <div className="text-xs sm:text-sm text-white">Réservation</div>
                 </div>
               </div>

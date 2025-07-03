@@ -26,41 +26,9 @@ const nextConfig: NextConfig = {
     // Note: turbo config removed as it may not work well with static export
   },
 
-  // Headers for security and performance
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-        ],
-      },
-      {
-        source: '/static/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-    ];
-  },
+  // Note: Headers are disabled for static export
+  // Configure these headers in your web server (Apache, Nginx, etc.) instead
+  // async headers() { ... }
 
   // Bundle analyzer in development
   webpack: (config, { dev, isServer }) => {

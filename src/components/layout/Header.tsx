@@ -119,7 +119,7 @@ export default function Header() {
             >
               <a href={`tel:${currentCity.phone}`} className="flex items-center" aria-label={`Appeler ${currentCity.name} au ${currentCity.phone}`}>
                 <Phone className="h-4 w-4 mr-1" />
-                <span className="text-sm">{currentCity.name}</span>
+                <span className="text-sm">{currentCity.phone}</span>
               </a>
             </Button>
           </div>
@@ -137,7 +137,7 @@ export default function Header() {
             <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground" asChild>
               <a href={`tel:${currentCity.phone}`} className="flex items-center" aria-label={`Appeler ${currentCity.name} au ${currentCity.phone}`}>
                 <Phone className="h-4 w-4 mr-2" />
-                {currentCity.flag} {currentCity.name}
+                {currentCity.phone}
               </a>
             </Button>
           </div>
